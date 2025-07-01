@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class LineaReceta extends Model
 {
+    use HasFactory;
     protected $table = 'linea_receta';
 
     protected $fillable = [
