@@ -1,0 +1,5 @@
+[2025-07-01 09:59:03] local.ERROR: __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\xampp\htdocs\recetas_api\bootstrap\cache\pac2.tmp,C:\xampp\htdocs\recetas_api\bootstrap\cache/packages.php): Acceso denegado (code: 5) {"exception":"[object] (Error(code: 0): __VSCODE_LARAVEL_STARTUP_ERROR__: rename(C:\\xampp\\htdocs\\recetas_api\\bootstrap\\cache\\pac2.tmp,C:\\xampp\\htdocs\\recetas_api\\bootstrap\\cache/packages.php): Acceso denegado (code: 5) at C:\\xampp\\htdocs\\recetas_api\\vendor\\_laravel_ide\\discover-31b934f114eabc246b541addb8b458e3.php:33)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\recetas_api\\vendor\\_laravel_ide\\discover-31b934f114eabc246b541addb8b458e3.php(62): LaravelVsCode::startupError(Object(ErrorException))
+#1 {main}
+"} 
