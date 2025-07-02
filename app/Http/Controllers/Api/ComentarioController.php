@@ -13,7 +13,7 @@ class ComentarioController extends Controller
      */
     public function index()
     {
-        //
+       return Comentario::all();
     }
 
     /**
