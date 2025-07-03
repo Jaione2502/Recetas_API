@@ -16,7 +16,7 @@ class CategoriaController extends Controller
     public function index()
     {
          return Categoria::all();
-         // return response()->json(['mensaje' => 'Funciona correctamente']);
+   
     }
 
     /**
@@ -40,12 +40,17 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-          $categoria = Categoria::find($id);
+        
+        $categoria = Categoria::select('nombre', 'descripcion')->find($id);
 
         if(!$categoria) {
             return response()->json(['message' => 'Categoría no encontrada'],404);
         }
         return  response()->json($categoria,200);
+
+
+
+        
     }
 
     /**

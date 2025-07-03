@@ -21,7 +21,15 @@ class ComentarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'usuario_id' => 'required|exists:usuario_id',
+            'receta_id' => 'required|exists:receta_id',
+            'contenido' => 'required|string',
+        ]);
+
+        $comentario = Comentario::create($request->all());
+
+        return response()->json($comentario, 201);
     }
 
     /**
@@ -29,7 +37,7 @@ class ComentarioController extends Controller
      */
     public function show(string $id)
     {
-        //
+         return Comentario::findOrFail($id);
     }
 
     /**
@@ -37,7 +45,15 @@ class ComentarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $comentario = Comentario::findOrFail($id);
+
+        $request->validate([
+            'contenido' => 'sometimes|required|string',
+        ]);
+
+        $comentario->update($request->all());
+
+        return response()->json($comentario, 200);
     }
 
     /**
@@ -45,6 +61,8 @@ class ComentarioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Comentario::destroy($id);
+
+        return response()->json(['mensaje' => 'Comentario eliminado correctamente'], 204);
     }
 }
