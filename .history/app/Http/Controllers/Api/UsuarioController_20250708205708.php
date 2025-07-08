@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
 
      public function login(Request $request)
     {

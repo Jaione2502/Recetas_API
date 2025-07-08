@@ -18,16 +18,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // Usuarios
-        Usuario::factory()->count(30)->create();
+        Usuario::factory()->count(10)->create();
 
         // Categorias
-        Categoria::factory()->count(10)->create();
+        Categoria::factory()->count(5)->create();
 
         // Ingredientes
         Ingrediente::factory()->count(50)->create();
 
         // Dietas
-        Dieta::factory()->count(30)->create();
+        Dieta::factory()->count(3)->create();
 
         // Recetas
         Receta::factory()->count(30)->create();
@@ -36,12 +36,12 @@ class DatabaseSeeder extends Seeder
         Comentario::factory()->count(50)->create();
 
         // Menus
-        Menu::factory()->count(30)->create();
+        Menu::factory()->count(10)->create();
 
         // Línea receta
         LineaReceta::factory()->count(50)->create();
 
         // Inventario
-        Inventario::factory()->count(30)->create();
+        Inventario::factory()->count(20)->create();
     }
 }
