@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
 
      public function login(Request $request)
     {
@@ -56,7 +59,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), // importante!
         ]);
 
         return response()->json($usuario, 201);

@@ -9,34 +9,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
-
-     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        if (! $usuario || ! Hash::check($request->password, $usuario->password)) {
-            return response()->json(['message' => 'Credenciales inválidas'], 401);
-        }
-
-        $token = $usuario->createToken('api-token')->plainTextToken;
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
-    }
-
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Sesión cerrada correctamente']);
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         return Usuario::all();
@@ -56,7 +31,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($request->password), // importante!
         ]);
 
         return response()->json($usuario, 201);
@@ -67,7 +42,7 @@ class UsuarioController extends Controller
      */
     public function show(string $id)
     {
-
+     
         $usuario = Usuario::select('name', 'email')->find($id);
          if(!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'],404);
