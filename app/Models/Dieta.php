@@ -13,8 +13,10 @@ class Dieta extends Model
         'descripcion',
     ];
 
+  
     public function recetas()
     {
-        return $this->belongsToMany(Receta::class, 'dieta_receta');
+        return $this->hasMany(Receta::class, 'dieta_id');
     }
+    
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('usuario_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('categoria_id')->nullable()->constrained('categorias')->onDelete('set null');
+            $table->foreignId('dieta_id')->nullable()->constrained('dietas')->onDelete('set null');
             $table->string('titulo');
             $table->text('descripcion');
             $table->text('instrucciones');
