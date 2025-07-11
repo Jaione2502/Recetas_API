@@ -1,0 +1,1390 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Recetas",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/categorias": {
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Ver todas las categorías",
+                "operationId": "684188b8d25abcad5e1c8a786226c02b",
+                "responses": {
+                    "200": {
+                        "description": "Listado de categorías"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Crear una nueva categoría",
+                "operationId": "240f085d72cd493a2f869e93edc2c132",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Categoría creada"
+                    }
+                }
+            }
+        },
+        "/api/categorias/{id}": {
+            "get": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Ver una categoría específica",
+                "operationId": "0644cd38b2452f7e5c9495574afcba4e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoría encontrada"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Actualizar una categoría",
+                "operationId": "8124c319ebe2032b571b923486a66a77",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Categoría actualizada"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categorias"
+                ],
+                "summary": "Eliminar una categoría",
+                "operationId": "266668bb5896ce68b7848fb39bf8107e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la categoría",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Categoría eliminada"
+                    },
+                    "404": {
+                        "description": "Categoría no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/comentarios": {
+            "post": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "summary": "Crear un nuevo comentario",
+                "description": "Store a newly created resource in storage.",
+                "operationId": "026f92d19d338adf094abb9a3ffe37a4",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "receta_id",
+                                    "contenido"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "receta_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "contenido": {
+                                        "type": "string",
+                                        "example": "Este es un comentario"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Comentario creado exitosamente"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/comentarios/{id}": {
+            "get": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "summary": "Obtener un comentario por ID",
+                "description": "Display the specified resource.",
+                "operationId": "015ff9d7638690d110a217678bfee7a1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comentario encontrado"
+                    },
+                    "404": {
+                        "description": "Comentario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "summary": "Actualizar un comentario",
+                "description": "Update the specified resource in storage.",
+                "operationId": "23c79b642250e58f6e3ffb24cb96441a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "contenido": {
+                                        "type": "string",
+                                        "example": "Comentario actualizado"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Comentario actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Comentario no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Comentarios"
+                ],
+                "summary": "Eliminar un comentario",
+                "description": "Remove the specified resource from storage.",
+                "operationId": "fcee796e40353ac1e350fa37ddd5ff62",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comentario eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Comentario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/dietas/{id}": {
+            "get": {
+                "tags": [
+                    "Dietas"
+                ],
+                "summary": "Obtener una dieta por ID",
+                "operationId": "3856d8f5586ed48ec87bac3b9e8c6514",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dieta encontrada"
+                    },
+                    "404": {
+                        "description": "Dieta no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Dietas"
+                ],
+                "summary": "Actualizar una dieta existente",
+                "operationId": "b34bb27106fc2778d69d9f0d36001083",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "descripcion",
+                                    "categoria"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Dieta Vegana"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Una dieta basada en plantas"
+                                    },
+                                    "categoria": {
+                                        "type": "string",
+                                        "example": "Vegana"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Dieta actualizada exitosamente"
+                    },
+                    "404": {
+                        "description": "Dieta no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Dietas"
+                ],
+                "summary": "Eliminar una dieta",
+                "operationId": "b684c8111023afbb7358cb56d33a674b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dieta eliminada exitosamente"
+                    },
+                    "404": {
+                        "description": "Dieta no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/dietas": {
+            "post": {
+                "tags": [
+                    "Dietas"
+                ],
+                "summary": "Crear una nueva dieta",
+                "operationId": "9009d264a6c7f3c9544862deb536823f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "descripcion",
+                                    "categoria"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Dieta Mediterránea"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Una dieta rica en frutas, verduras y aceite de oliva"
+                                    },
+                                    "categoria": {
+                                        "type": "string",
+                                        "example": "Saludable"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Dieta creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/ingredientes": {
+            "post": {
+                "tags": [
+                    "Ingredientes"
+                ],
+                "summary": "Crear un nuevo ingrediente",
+                "operationId": "fbfc07b53757446dc4527173c43a8f71",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "unidad_medida"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Sal"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Sal de la costa"
+                                    },
+                                    "unidad_medida": {
+                                        "type": "string",
+                                        "example": "Kg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ingrediente creado exitosamente"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/ingredientes/{id}": {
+            "get": {
+                "tags": [
+                    "Ingredientes"
+                ],
+                "summary": "Obtener un ingrediente por ID",
+                "operationId": "a04692e0b6a47f80d831ae1e5a8cf633",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ingrediente encontrado"
+                    },
+                    "404": {
+                        "description": "Ingrediente no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Ingredientes"
+                ],
+                "summary": "Actualizar un ingrediente",
+                "operationId": "9388d61b5cafcfa3f363ca9cdec6b9a0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "unidad_medida"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Azúcar"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Azúcar moreno"
+                                    },
+                                    "unidad_medida": {
+                                        "type": "string",
+                                        "example": "Gramos"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ingrediente actualizado correctamente"
+                    },
+                    "404": {
+                        "description": "Ingrediente no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Ingredientes"
+                ],
+                "summary": "Eliminar un ingrediente",
+                "operationId": "86c91db7c04296b7fc7a1434d1e49642",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ingrediente eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Ingrediente no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/inventario": {
+            "post": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Crear un nuevo inventario",
+                "operationId": "4bdb1deb011d85be4aeb4a74c1fddb5c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer"
+                                    },
+                                    "ingrediente_id": {
+                                        "type": "integer"
+                                    },
+                                    "cantidad": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Inventario creado"
+                    }
+                }
+            }
+        },
+        "/api/inventario/{id}": {
+            "get": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Obtener un inventario por ID",
+                "operationId": "f70d41595ebb664771311fdb35e14181",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inventario encontrado"
+                    },
+                    "404": {
+                        "description": "Inventario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Actualizar un inventario",
+                "operationId": "93da66c8bc6b35165f6118fbd75e9097",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "ingrediente_id",
+                                    "cantidad"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer"
+                                    },
+                                    "ingrediente_id": {
+                                        "type": "integer"
+                                    },
+                                    "cantidad": {
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Inventario actualizado"
+                    },
+                    "404": {
+                        "description": "Inventario no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Eliminar un inventario",
+                "operationId": "37a3b09f76b43fa8a03dbe0009568319",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Inventario eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Inventario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/lineas-receta/{id}": {
+            "get": {
+                "tags": [
+                    "LineaReceta"
+                ],
+                "summary": "Obtener una línea de receta por ID",
+                "operationId": "13bc427ca42b6d063f141e39d6c7ee4a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Línea de receta encontrada"
+                    },
+                    "404": {
+                        "description": "Línea de receta no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "LineaReceta"
+                ],
+                "summary": "Actualizar una línea de receta",
+                "operationId": "42b98e173ddb85976800ffda04e21cdd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "receta_id",
+                                    "ingrediente",
+                                    "cantidad"
+                                ],
+                                "properties": {
+                                    "receta_id": {
+                                        "type": "integer"
+                                    },
+                                    "ingrediente": {
+                                        "type": "string"
+                                    },
+                                    "cantidad": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Línea de receta actualizada"
+                    },
+                    "404": {
+                        "description": "Línea de receta no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "LineaReceta"
+                ],
+                "summary": "Eliminar una línea de receta",
+                "operationId": "2e696a34c41d5efebe0c7014707abacb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Línea de receta eliminada"
+                    },
+                    "404": {
+                        "description": "Línea de receta no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/lineas-receta": {
+            "post": {
+                "tags": [
+                    "LineaReceta"
+                ],
+                "summary": "Crear una nueva línea de receta",
+                "operationId": "9a442a431e1089f20885db27ffac4fa2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "receta_id",
+                                    "ingrediente",
+                                    "cantidad"
+                                ],
+                                "properties": {
+                                    "receta_id": {
+                                        "type": "integer"
+                                    },
+                                    "ingrediente": {
+                                        "type": "string"
+                                    },
+                                    "cantidad": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Línea de receta creada"
+                    },
+                    "400": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/api/menus": {
+            "post": {
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "Crear un menú",
+                "operationId": "31e1ddbd8da961fb496e3e2d46b53823",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "nombre",
+                                    "fecha"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer"
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "fecha": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Menú creado correctamente"
+                    }
+                }
+            }
+        },
+        "/api/menus/{id}": {
+            "get": {
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "Obtener un menú por ID",
+                "operationId": "f21bb63f9fe1ea437a502e5116af01a8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Menú encontrado"
+                    },
+                    "404": {
+                        "description": "Menú no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "Actualizar un menú",
+                "operationId": "88cfe38e1bda9aad62dbca6007b25422",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "usuario_id",
+                                    "fecha"
+                                ],
+                                "properties": {
+                                    "usuario_id": {
+                                        "type": "integer"
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "fecha": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Menú actualizado"
+                    },
+                    "404": {
+                        "description": "Menú no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Menu"
+                ],
+                "summary": "Eliminar un menú",
+                "operationId": "e367f4eb9f2883c92645c50bbac63925",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Menú eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Menú no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/recetas/{id}": {
+            "get": {
+                "tags": [
+                    "Receta"
+                ],
+                "summary": "Obtener una receta por ID",
+                "operationId": "868fa1d6f2f2d8e2fbcc18c85844a38f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Receta encontrada"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Receta"
+                ],
+                "summary": "Actualizar una receta",
+                "operationId": "565ccbdd2995b0a2d1ba3b39af9594a0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "descripcion",
+                                    "categoria"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    },
+                                    "categoria": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Receta actualizada"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Receta"
+                ],
+                "summary": "Eliminar una receta",
+                "operationId": "18417ccc80721904891351b3430d9c40",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Receta eliminada"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/recetas": {
+            "post": {
+                "tags": [
+                    "Receta"
+                ],
+                "summary": "Crear una nueva receta",
+                "operationId": "aeb79d1b0a18743ea7d108a7df38c6a8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "descripcion",
+                                    "categoria"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "descripcion": {
+                                        "type": "string"
+                                    },
+                                    "categoria": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Receta creada"
+                    },
+                    "400": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Cerrar sesión del usuario",
+                "operationId": "acd1fe62ad3d50f591a5d7b04c62cb04",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente"
+                    },
+                    "401": {
+                        "description": "No autorizado"
+                    }
+                }
+            }
+        },
+        "/api/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener todos los usuarios",
+                "operationId": "d57cb6c6a223fe9801b81b52dcac45df",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Crear un nuevo usuario",
+                "operationId": "96d159a6919ad7ade81fd7af5c7a6be8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "juanperez@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado exitosamente"
+                    },
+                    "400": {
+                        "description": "Solicitud incorrecta"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Obtener un usuario por ID",
+                "operationId": "377032c75382a00d9fcafd558822f36c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario encontrado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Actualizar un usuario",
+                "operationId": "ee6ffe04a5be33eeca7f8f90c91d9803",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Juan Perez"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "juanperez@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado exitosamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Eliminar un usuario",
+                "operationId": "0f00f1d6dae33b81a874725503534c06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado exitosamente"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Categorias",
+            "description": "Operaciones relacionadas con las categorías"
+        },
+        {
+            "name": "Comentarios",
+            "description": "Operaciones sobre comentarios de recetas"
+        },
+        {
+            "name": "Dietas",
+            "description": "Operaciones sobre dietas"
+        },
+        {
+            "name": "Ingredientes",
+            "description": "Operaciones sobre ingredientes"
+        },
+        {
+            "name": "Inventario",
+            "description": "Operaciones sobre el inventario"
+        },
+        {
+            "name": "LineaReceta",
+            "description": "Operaciones sobre las líneas de receta"
+        },
+        {
+            "name": "Menu",
+            "description": "Operaciones sobre los menús"
+        },
+        {
+            "name": "Receta",
+            "description": "Operaciones sobre las recetas"
+        },
+        {
+            "name": "Usuario",
+            "description": "Operaciones sobre los usuarios"
+        }
+    ]
+}

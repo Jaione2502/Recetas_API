@@ -5,13 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use OpenApi\Annotations as OA;
 
-
-
+/**
+ * @OA\Info(title="API de Recetas", version="1.0")
+ * @OA\Tag(name="Categorias", description="Operaciones relacionadas con las categorías")
+ */
 class CategoriaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/categorias",
+     *     tags={"Categorias"},
+     *     summary="Ver todas las categorías",
+     *     @OA\Response(response=200, description="Listado de categorías")
+     * )
      */
     public function index()
     {
@@ -20,7 +28,19 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/categorias",
+     *     tags={"Categorias"},
+     *     summary="Crear una nueva categoría",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="descripcion", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Categoría creada")
+     * )
      */
     public function store(Request $request)
     {
@@ -36,7 +56,20 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/categorias/{id}",
+     *     tags={"Categorias"},
+     *     summary="Ver una categoría específica",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la categoría",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Categoría encontrada"),
+     *     @OA\Response(response=404, description="Categoría no encontrada")
+     * )
      */
     public function show(string $id)
     {
@@ -54,7 +87,27 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/categorias/{id}",
+     *     tags={"Categorias"},
+     *     summary="Actualizar una categoría",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la categoría",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="descripcion", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Categoría actualizada"),
+     *     @OA\Response(response=404, description="Categoría no encontrada")
+     * )
      */
     public function update(Request $request, string $id)
     {
@@ -72,7 +125,20 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/categorias/{id}",
+     *     tags={"Categorias"},
+     *     summary="Eliminar una categoría",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID de la categoría",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Categoría eliminada"),
+     *     @OA\Response(response=404, description="Categoría no encontrada")
+     * )
      */
     public function destroy(string $id)
     {
