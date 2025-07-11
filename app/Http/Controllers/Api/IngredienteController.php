@@ -5,16 +5,39 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Ingrediente;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
 
 class IngredienteController extends Controller
 {
-    // GET /api/ingredientes
+    /**
+     * @OA\Tag(
+     *     name="Ingredientes",
+     *     description="Operaciones sobre ingredientes"
+     * )
+     */
     public function index()
     {
         return response()->json(Ingrediente::all(), 200);
     }
 
-    // POST /api/ingredientes
+    /**
+     * @OA\Post(
+     *     path="/api/ingredientes",
+     *     tags={"Ingredientes"},
+     *     summary="Crear un nuevo ingrediente",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre", "unidad_medida"},            
+     *             @OA\Property(property="nombre", type="string", example="Sal"),
+     *             @OA\Property(property="descripcion", type="string", example="Sal de la costa"),
+     *             @OA\Property(property="unidad_medida", type="string", example="Kg")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Ingrediente creado exitosamente"),
+     *     @OA\Response(response=400, description="Solicitud incorrecta")
+     * )    
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -31,14 +54,41 @@ class IngredienteController extends Controller
         ], 201);
     }
 
-    // GET /api/ingredientes/{id}
+    /**
+     * @OA\Get(
+     *     path="/api/ingredientes/{id}",
+     *     tags={"Ingredientes"},
+     *     summary="Obtener un ingrediente por ID",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Ingrediente encontrado"),
+     *     @OA\Response(response=404, description="Ingrediente no encontrado")
+     * )
+     */
     public function show($id)
     {
         $ingrediente = Ingrediente::findOrFail($id);
         return response()->json($ingrediente, 200);
     }
 
-    // PUT /api/ingredientes/{id}
+    /**
+     * @OA\Put(
+     *     path="/api/ingredientes/{id}",
+     *     tags={"Ingredientes"},
+     *     summary="Actualizar un ingrediente",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"nombre", "unidad_medida"},
+     *             @OA\Property(property="nombre", type="string", example="Azúcar"),
+     *             @OA\Property(property="descripcion", type="string", example="Azúcar moreno"),
+     *             @OA\Property(property="unidad_medida", type="string", example="Gramos")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Ingrediente actualizado correctamente"),
+     *     @OA\Response(response=404, description="Ingrediente no encontrado")
+     * )
+     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -56,7 +106,16 @@ class IngredienteController extends Controller
         ], 200);
     }
 
-    // DELETE /api/ingredientes/{id}
+    /**
+     * @OA\Delete(
+     *     path="/api/ingredientes/{id}",
+     *     tags={"Ingredientes"},
+     *     summary="Eliminar un ingrediente",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+     *     @OA\Response(response=200, description="Ingrediente eliminado exitosamente"),
+     *     @OA\Response(response=404, description="Ingrediente no encontrado")
+     * )
+     */
     public function destroy($id)
     {
         $ingrediente = Ingrediente::findOrFail($id);
