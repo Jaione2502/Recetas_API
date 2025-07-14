@@ -40,11 +40,6 @@ return [
             'driver' => 'session',
             'provider' => 'usuarios',
         ],
-
-        'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'usuarios',
-    ],
     ],
 
     /*
@@ -96,7 +91,7 @@ return [
     */
 
     'passwords' => [
-        'usuarios' => [
+        'users' => [
             'provider' => 'users',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
             'expire' => 60,
