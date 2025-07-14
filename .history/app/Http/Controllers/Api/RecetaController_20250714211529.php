@@ -115,7 +115,7 @@ class RecetaController extends Controller
         return response()->json(['mensaje' => 'Receta no encontrada'], 404);
     }
 
-
+    // Solo actualiza los campos si se envían en el request
     $receta->update([
         'categoria_id' => $request->input('categoria_id', $receta->categoria_id),
         'titulo' => $request->input('titulo', $receta->titulo),
@@ -125,6 +125,7 @@ class RecetaController extends Controller
         'porciones' => $request->input('porciones', $receta->porciones),
     ]);
 
+    // Recargar relaciones
     $receta->load(['usuario', 'categoria', 'ingredientes', 'comentarios']);
 
     return response()->json(['mensaje' => 'Receta actualizada', 'data' => $receta], 200);

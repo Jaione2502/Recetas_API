@@ -72,7 +72,7 @@ class DietaController extends Controller
      */
     public function store(Request $request)
     {
-        $dieta = Dieta::create($request->only(['nombre', 'descripcion']));
+        $dieta = Dieta::create($request->only(['nombre', 'descripcion', 'categoria']));
         return response()->json(['mensaje' => 'Dieta creada', 'data' => $dieta], 201);
     }
 
