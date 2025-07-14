@@ -6,10 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
+use OA\Annotations as OA;
 
 class UsuarioController extends Controller
 {
-
+    /**
+     * @OA\Tag(
+     *     name="Usuario",
+     *     description="Operaciones sobre los usuarios"
+     * )
+     */
      public function login(Request $request)
     {
         $request->validate([
@@ -31,19 +37,51 @@ class UsuarioController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     tags={"Usuario"},
+     *     summary="Cerrar sesión del usuario",
+     *     @OA\Response(response=200, description="Sesión cerrada correctamente"),
+     *     @OA\Response(response=401, description="No autorizado")
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Sesión cerrada correctamente']);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/usuarios",
+     *     tags={"Usuario"},
+     *     summary="Obtener todos los usuarios",
+     *     @OA\Response(response=200, description="Lista de usuarios")
+     * )
+     */
     public function index()
     {
         return Usuario::all();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     *     path="/api/usuarios",    
+     *     tags={"Usuario"},
+     *     summary="Crear un nuevo usuario",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "password"},
+     *             @OA\Property(property="name", type="string", example="Juan Perez"),
+     *             @OA\Property(property="email", type="string", example="juanperez@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="123456")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Usuario creado exitosamente"),
+     *     @OA\Response(response=400, description="Solicitud incorrecta")
+     * )
      */
     public function store(Request $request)
     {
@@ -63,7 +101,14 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuario"},
+     *     summary="Obtener un usuario por ID",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="string")),
+     *     @OA\Response(response=200, description="Usuario encontrado"),
+     *     @OA\Response(response=404, description="Usuario no encontrado")
+     * )
      */
     public function show(string $id)
     {
@@ -76,7 +121,23 @@ class UsuarioController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Put(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuario"},
+     *     summary="Actualizar un usuario",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="string")),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "email", "password"},
+     *             @OA\Property(property="name", type="string", example="Juan Perez"),
+     *             @OA\Property(property="email", type="string", example="juanperez@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="123456")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Usuario actualizado exitosamente"),
+     *     @OA\Response(response=404, description="Usuario no encontrado")                                   
+     * )                    
      */
     public function update(Request $request, string $id)
     {
@@ -98,8 +159,15 @@ class UsuarioController extends Controller
         return response()->json($usuario, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
+     /**
+     * @OA\Delete(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuario"},
+     *     summary="Eliminar un usuario",
+     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="string")),
+     *     @OA\Response(response=200, description="Usuario eliminado exitosamente"),
+     *     @OA\Response(response=404, description="Usuario no encontrado")                                   
+     * )    
      */
     public function destroy(string $id)
     {
