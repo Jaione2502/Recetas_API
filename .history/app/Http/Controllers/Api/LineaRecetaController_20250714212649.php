@@ -72,7 +72,7 @@ class LineaRecetaController extends Controller
      */
     public function store(Request $request)
     {
-        $linea = LineaReceta::create($request->only(['receta_id', 'ingrediente_id', 'paso', 'contenido', 'cantidad']));
+        $linea = LineaReceta::create($request->only(['receta_id', 'ingrediente_id', 'cantidad']));
         return response()->json(['mensaje' => 'Línea de receta creada', 'data' => $linea], 201);
     }
 
@@ -101,7 +101,7 @@ class LineaRecetaController extends Controller
         if (!$linea) {
             return response()->json(['mensaje' => 'Línea de receta no encontrada'], 404);
         }
-        $linea->update($request->only(['receta_id', 'ingrediente_id', 'paso', 'contenido', 'cantidad']));
+        $linea->update($request->only(['receta_id', 'ingrediente_id', 'cantidad']));
         return response()->json(['mensaje' => 'Línea de receta actualizada', 'data' => $linea]);
     }
 

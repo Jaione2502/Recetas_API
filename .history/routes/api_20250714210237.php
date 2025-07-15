@@ -13,17 +13,14 @@ use App\Http\Controllers\Api\DietaController;
 
 // RUTAS PÚBLICAS
 Route::post('/login', [UsuarioController::class, 'login']);
-Route::get('/recetas', [RecetaController::class, 'index']);
-Route::get('/recetas/{id}', [RecetaController::class, 'show']);
-Route::get('/dietas', [DietaController::class, 'index']);
-Route::get('/dietas/{id}', [DietaController::class, 'show']);
+
 
 // RUTAS PRIVADAS
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categoria', CategoriaController::class);
     Route::apiResource('comentario', ComentarioController::class);
     Route::apiResource('usuario', UsuarioController::class);
-    Route::apiResource('inventario', InventarioController::class);
+    Route::apiResource('inventario', InventarioController::class, ['except' => ['index', 'show']]);
     Route::apiResource('menus', MenuController::class);
     Route::apiResource('ingredientes', IngredienteController::class);
     Route::apiResource('recetas', RecetaController::class, ['except' => ['index', 'show']]);

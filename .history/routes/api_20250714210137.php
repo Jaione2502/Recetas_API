@@ -13,10 +13,7 @@ use App\Http\Controllers\Api\DietaController;
 
 // RUTAS PÚBLICAS
 Route::post('/login', [UsuarioController::class, 'login']);
-Route::get('/recetas', [RecetaController::class, 'index']);
-Route::get('/recetas/{id}', [RecetaController::class, 'show']);
-Route::get('/dietas', [DietaController::class, 'index']);
-Route::get('/dietas/{id}', [DietaController::class, 'show']);
+
 
 // RUTAS PRIVADAS
 Route::middleware('auth:sanctum')->group(function () {
