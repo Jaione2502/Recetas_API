@@ -17,7 +17,18 @@ class ComentarioController extends Controller
  */
     public function index()
     {
-       return Comentario::all();
+        
+        $comentarios = Comentario::with(['usuario', 'receta'])->get();
+
+        return response()->json($comentarios->map(function ($comentario) {
+            return [
+                'id' => $comentario->id,
+                'contenido' => $comentario->contenido,
+                'usuario' => $comentario->usuario->name ?? null,
+                'receta' => $comentario->receta->titulo ?? null,
+                
+            ];
+        }));
     }
 
     /**
@@ -43,8 +54,8 @@ class ComentarioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'usuario_id' => 'required|exists:usuario,id',
-            'receta_id' => 'required|exists:receta,id',
+            'usuario_id' => 'required|exists:usuarios,id',
+            'receta_id' => 'required|exists:recetas,id',
             'contenido' => 'required|string',
         ]);
 
@@ -67,7 +78,18 @@ class ComentarioController extends Controller
      */
     public function show(string $id)
     {
-         return Comentario::findOrFail($id);
+          $comentario = Comentario::with(['usuario', 'receta'])
+        ->findOrFail($id);
+
+    return response()->json([
+        'id' => $comentario->id,
+        'contenido' => $comentario->contenido,
+        'usuario' => $comentario->usuario->name ?? null,
+        'receta' => $comentario->receta->titulo ?? null,
+    ]);
+
+        
+
     }
 
     /**
@@ -115,8 +137,13 @@ class ComentarioController extends Controller
      */
     public function destroy(string $id)
     {
-        Comentario::destroy($id);
+        $comentario  = Comentario::find($id);
+        if(!$comentario) {
+            return response()->json(['message' => 'Comentario no encontrado'],404);
+        }
 
-        return response()->json(['mensaje' => 'Comentario eliminado correctamente'], 204);
+        $comentario ->delete();
+
+        return response()->json(['message','Comentario borrado correctamente',200]);
     }
 }
