@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use OpenApi\Annotations as OA;
 
+
 /**
  * @OA\Info(title="API de Recetas", version="1.0")
  * @OA\Tag(name="Categorias", description="Operaciones relacionadas con las categorías")
@@ -109,20 +110,27 @@ class CategoriaController extends Controller
      *     @OA\Response(response=404, description="Categoría no encontrada")
      * )
      */
-    public function update(Request $request, string $id)
-    {
-        $categoria  = Categoria::find($id);
-        if(!$categoria) {
-            return response()->json(['message' => 'Categoría no encontrada'],404);
-        }
+public function update(Request $request, string $id)
+{
+    $categoria  = Categoria::find($id);
 
-        $request->validate([
-            'nombre'=>'required|string|max:255',
-            'descripcion'=> 'required|string|max:255',
-        ]);
-
-        $categoria -> update($request->all());
+    if (!$categoria) {
+        return response()->json(['message' => 'Categoría no encontrada'], 404);
     }
+
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'required|string|max:255',
+    ]);
+
+    $categoria->update($request->all());
+
+    return response()->json([
+        'message' => 'Categoría actualizada correctamente',
+        'categoria' => $categoria
+    ], 200);
+
+}
 
     /**
      * @OA\Delete(
