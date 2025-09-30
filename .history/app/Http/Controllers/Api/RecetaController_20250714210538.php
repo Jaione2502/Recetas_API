@@ -108,29 +108,21 @@ class RecetaController extends Controller
      * )
      */
     public function update(Request $request, $id)
-{
-    $receta = Receta::find($id);
+    {
+        $receta = Receta::find($id);
 
-    if (!$receta) {
-        return response()->json(['mensaje' => 'Receta no encontrada'], 404);
+        if (!$receta) {
+            return response()->json(['mensaje' => 'Receta no encontrada'], 404);
+        }
+
+        $receta->update([
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion'),
+            'categoria' => $request->input('categoria'),
+        ]);
+
+        return response()->json(['mensaje' => 'Receta actualizada', 'data' => $receta]);
     }
-
-
-    $receta->update([
-        'usuario_id' => $request->input('usuario_id', Auth::id()),
-        'categoria_id' => $request->input('categoria_id', $receta->categoria_id),
-        'titulo' => $request->input('titulo', $receta->titulo),
-        'descripcion' => $request->input('descripcion', $receta->descripcion),
-        'instrucciones' => $request->input('instrucciones', $receta->instrucciones),
-        'tiempo_preparacion' => $request->input('tiempo_preparacion', $receta->tiempo_preparacion),
-        'porciones' => $request->input('porciones', $receta->porciones),
-    ]);
-
-    $receta->load(['usuario', 'categoria', 'ingredientes', 'comentarios']);
-
-    return response()->json(['mensaje' => 'Receta actualizada', 'data' => $receta], 200);
-}
-
 
     /**
      * @OA\Delete(
