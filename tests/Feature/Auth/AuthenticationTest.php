@@ -2,46 +2,65 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User;
+use App\Models\Usuario;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+    #[Test]
+    public function users_can_authenticate_with_valid_credentials()
     {
-        $user = User::factory()->create();
-
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
+        // Creamos un usuario con password hasheado
+        $usuario = Usuario::factory()->create([
+            'password' => bcrypt('password123'),
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertNoContent();
+        $response = $this->postJson('/api/login', [
+            'email' => $usuario->email,
+            'password' => 'password123',
+        ]);
+
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                     'access_token',
+                     'token_type',
+                 ]);
     }
 
-    public function test_users_can_not_authenticate_with_invalid_password(): void
+    #[Test]
+    public function users_cannot_authenticate_with_invalid_password()
     {
-        $user = User::factory()->create();
+        $usuario = Usuario::factory()->create([
+            'password' => bcrypt('password123'),
+        ]);
 
-        $this->post('/login', [
-            'email' => $user->email,
+        $response = $this->postJson('/api/login', [
+            'email' => $usuario->email,
             'password' => 'wrong-password',
         ]);
 
-        $this->assertGuest();
+        $response->assertStatus(401)
+                 ->assertJson(['message' => 'Credenciales inválidas']);
     }
 
-    public function test_users_can_logout(): void
+    #[Test]
+    public function users_can_logout()
     {
-        $user = User::factory()->create();
+        $usuario = Usuario::factory()->create([
+            'password' => bcrypt('password123'),
+        ]);
 
-        $response = $this->actingAs($user)->post('/logout');
+        // Creamos token de prueba
+        $token = $usuario->createToken('test-token')->plainTextToken;
 
-        $this->assertGuest();
-        $response->assertNoContent();
+        $response = $this->withHeader('Authorization', 'Bearer '.$token)
+                         ->postJson('/api/logout');
+
+        $response->assertStatus(200)
+                 ->assertJson(['message' => 'Sesión cerrada correctamente']);
     }
 }
