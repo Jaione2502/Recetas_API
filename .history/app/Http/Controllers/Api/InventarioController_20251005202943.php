@@ -19,18 +19,15 @@ class InventarioController extends Controller
     {
          $inventario = Inventario::with(['usuario', 'ingrediente'])->get();
 
-        return response()->json(
-            $inventario->map(function ($item) {
-        return [
-            'id'          => $item->id,
-            'cantidad'    => $item->cantidad,
-            'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
-            'ingrediente' => $item->ingrediente->titulo
-                            ?? $item->ingrediente->nombre
-                            ?? null,
-        ];
-    })
-);
+        return response()->json($inventario->map(function ($inventario) {
+            return [
+                'id' => $inventario->id,
+                'cantidad' => $inventario->cantidad,
+                'usuario' => $inventario->usuario->name ?? null,
+                'ingrediente' => $inventario->ingrediente->titulo ?? $inventario->nombre ?? null,
+
+            ];
+        }));
     }
 
      /**
