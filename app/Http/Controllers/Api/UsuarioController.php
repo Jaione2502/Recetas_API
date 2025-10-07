@@ -85,19 +85,19 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+      
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:usuarios,email',
             'password' => 'required|string|min:6',
+           
         ]);
+        
+        $usuario = Usuario::create($request->all());
 
-        $usuario = Usuario::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        return response()->json(['id' => $usuario->id],201);
 
-        return response()->json($usuario, 201);
+
     }
 
     /**
@@ -141,22 +141,27 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-          $usuario = Usuario::findOrFail($id);
+        
+
+        $usuario  = Usuario::find($id);
+
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
 
         $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'email' => 'sometimes|required|string|email|max:255|unique:usuarios,email,' . $usuario->id,
-            'password' => 'sometimes|required|string|min:6',
         ]);
 
-        $data = $request->all();
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        }
+        $usuario->update($request->all());
 
-        $usuario->update($data);
+        return response()->json([
+            'message' => 'Usuario actualizado correctamente',
+            'usuario' => $usuario
+        ], 200);
 
-        return response()->json($usuario, 200);
+
     }
 
      /**
@@ -171,7 +176,17 @@ class UsuarioController extends Controller
      */
     public function destroy(string $id)
     {
-        Usuario::destroy($id);
-        return response()->json(['mensaje' => 'Usuario eliminado correctamente'], 204);
+       
+
+        $usuario  = Usuario::find($id);
+        if(!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'],404);
+        }
+
+        $usuario ->delete();
+
+        return response()->json(['message','Usuario borrado correctamente',200]);
+
+
     }
 }
