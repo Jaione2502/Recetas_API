@@ -12,21 +12,21 @@ class UsuarioTest extends TestCase
     use RefreshDatabase;
 
   
-    public function test_pueden_crear_cuenta()
+    public function test_crear_usuario()
     {
 
      $admin = Usuario::factory()->create([
-            'password' => bcrypt('password123') // importante que esté hasheada
+            'password' => bcrypt('password123') 
         ]);
 
-        // Autenticamos al admin con Sanctum
+       
         $response = $this->actingAs($admin, 'sanctum')->postJson('/api/usuario', [
             'name' => 'Prueba Test',
             'email' => 'pruebatest@example.com',
             'password' => 'password123',
         ]);
 
-        // Aserciones
+      
         $response->assertStatus(201)
                  ->assertJsonStructure(['id']);
 
@@ -73,7 +73,7 @@ class UsuarioTest extends TestCase
     }
 
  
-    public function test_hacer_logout()
+    public function test_logout()
     {
         $usuario = Usuario::factory()->create([
             'password' => bcrypt('password123'),
@@ -89,7 +89,7 @@ class UsuarioTest extends TestCase
     }
 
   
-    public function test_actualizar_usuario()
+    public function test_modificar_usuario()
     {
          $admin = Usuario::factory()->create([
         'password' => bcrypt('password123')
