@@ -17,20 +17,17 @@ class InventarioController extends Controller
      */
     public function index()
     {
-         $inventario = Inventario::with(['usuario', 'ingrediente'])->get();
+        $inventario = Inventario::with(['usuario', 'ingrediente'])->get();
 
-        return response()->json(
-            $inventario->map(function ($item) {
-        return [
-            'id'          => $item->id,
-            'cantidad'    => $item->cantidad,
-            'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
-            'ingrediente' => $item->ingrediente->titulo
-                            ?? $item->ingrediente->nombre
-                            ?? null,
-        ];
-    })
-);
+        return response()->json($inventario->map(function ($inventario) {
+            return [
+                'id' => $inventario->id,
+                'ingrediente' => $inventario->ingrediente->titulo ?? null,
+                'usuario' => $inventario->usuario->name ?? null,
+                'cantidad' => $inventario->cantidad
+
+            ];
+        }));
     }
 
      /**
@@ -78,7 +75,7 @@ class InventarioController extends Controller
      */
     public function show(string $id)
     {
-          $inventario = Inventario::with(['usuario', 'ingrediente'])
+          $inventario = Inventario::with(['usuario', 'receta'])
         ->findOrFail($id);
 
     return response()->json([
@@ -87,7 +84,8 @@ class InventarioController extends Controller
         'usuario' => $inventario->usuario->name ?? null,
         'ingrediente' => $inventario->ingrediente->titulo ?? null,
     ]);
-}
+    }
+
     /**
      * @OA\Put(
      *     path="/api/inventario/{id}",
@@ -106,21 +104,17 @@ class InventarioController extends Controller
      *     @OA\Response(response=404, description="Inventario no encontrado")
      * )
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
+        $inventario = Inventario::findOrFail($id);
+
         $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
-            'ingrediente_id' => 'required|exists:ingredientes,id',
-            'cantidad' => 'required|numeric|min:0',
+            'contenido' => 'sometimes|required|string',
         ]);
 
-        $inventario = Inventario::findOrFail($id);
         $inventario->update($request->all());
 
-        return response()->json([
-            'mensaje' => 'Inventario actualizado correctamente',
-            'data' => $inventario
-        ], 200);
+        return response()->json($inventario, 200);
     }
 
     /**
@@ -135,9 +129,13 @@ class InventarioController extends Controller
      */
     public function destroy($id)
     {
-        $inventario = Inventario::findOrFail($id);
-        $inventario->delete();
+        $inventario  = Inventario::find($id);
+        if(!$inventario) {
+            return response()->json(['message' => 'Inventario no encontrado'],404);
+        }
 
-        return response()->json(['mensaje' => 'Inventario eliminado']);
+        $inventario ->delete();
+
+        return response()->json(['message','Inventario borrado correctamente',200]);
     }
 }

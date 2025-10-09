@@ -23,6 +23,6 @@ class Inventario extends Model
 
     public function ingrediente()
     {
-        return $this->belongsTo(Ingrediente::class, 'ingrediente_id');
+        return $this->belongsTo(Ingrediente::class);
     }
 }
