@@ -40,7 +40,7 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario' => 'required|exists:usuarios,id',
             'nombre' => 'required|string|max:255',
             'fecha' => 'required|date',
         ]);
@@ -91,7 +91,7 @@ class MenuController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'usuario_id' => 'required|exists:usuarios,id',
+            'usuario' => 'required|exists:usuarios,id',
             'nombre' => 'nullable|string',
             'fecha' => 'required|date',
         ]);
