@@ -17,18 +17,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menu = Menu::with(['usuario'])->get();
-
-        return response()->json(
-            $menu->map(function ($item) {
-        return [
-            'id'          => $item->id,
-            'fecha'     => $item->fecha,
-            'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
-            'nombre' => $item->nombre
-        ];
-    })
-);
+        return response()->json(Menu::all(), 200);
     }
 
     /**
@@ -76,13 +65,8 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        $menu = Menu::with('usuario')->findOrFail($id);
-        return response()->json([
-        'id' => $menu->id,
-        'nombre' => $menu->nombre,
-        'usuario' => $menu->usuario->name ?? null,
-        'fecha' => $menu->fecha,
-    ]);
+        $menu = Menu::findOrFail($id);
+        return response()->json($menu, 200);
     }
 
     /**

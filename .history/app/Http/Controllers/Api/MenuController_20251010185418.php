@@ -23,7 +23,7 @@ class MenuController extends Controller
             $menu->map(function ($item) {
         return [
             'id'          => $item->id,
-            'fecha'     => $item->fecha,
+            'fecha'    => $item->fecha,
             'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
             'nombre' => $item->nombre
         ];
