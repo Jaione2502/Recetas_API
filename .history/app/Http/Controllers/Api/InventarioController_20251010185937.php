@@ -85,9 +85,7 @@ class InventarioController extends Controller
         'id' => $inventario->id,
         'cantidad' => $inventario->cantidad,
         'usuario' => $inventario->usuario->name ?? null,
-        'ingrediente' => $item->ingrediente->titulo
-                            ?? $item->ingrediente->nombre
-                            ?? null,
+        'ingrediente' => $inventario->ingrediente->titulo ?? null,
     ]);
 }
     /**
@@ -110,12 +108,12 @@ class InventarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'cantidad' => 'required|numeric|min:0',
         ]);
 
         $inventario = Inventario::findOrFail($id);
-        $inventario->update($request->all());
+        $inventario->update($validated);
 
         return response()->json([
             'mensaje' => 'Inventario actualizado correctamente',

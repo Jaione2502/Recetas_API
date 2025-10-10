@@ -85,9 +85,7 @@ class InventarioController extends Controller
         'id' => $inventario->id,
         'cantidad' => $inventario->cantidad,
         'usuario' => $inventario->usuario->name ?? null,
-        'ingrediente' => $item->ingrediente->titulo
-                            ?? $item->ingrediente->nombre
-                            ?? null,
+        'ingrediente' => $inventario->ingrediente->titulo ?? null,
     ]);
 }
     /**
@@ -111,6 +109,8 @@ class InventarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'usuario' => 'required|exists:usuarios,id',
+            'ingrediente' => 'required|exists:ingredientes,id',
             'cantidad' => 'required|numeric|min:0',
         ]);
 
