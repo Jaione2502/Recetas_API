@@ -20,13 +20,13 @@ class InventarioController extends Controller
          $inventario = Inventario::with(['usuario', 'ingrediente'])->get();
 
         return response()->json(
-            $inventario->map(function ($inventario) {
+            $inventario->map(function ($item) {
         return [
-            'id'          => $inventario->id,
-            'cantidad'    => $inventario->cantidad,
-            'usuario'     => $inventario->usuario->name ?? $item->usuario->nombre ?? null,
-            'ingrediente' => $inventario->ingrediente->titulo
-                            ?? $inventario->ingrediente->nombre
+            'id'          => $item->id,
+            'cantidad'    => $item->cantidad,
+            'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
+            'ingrediente' => $item->ingrediente->titulo
+                            ?? $item->ingrediente->nombre
                             ?? null,
         ];
     })
@@ -85,8 +85,8 @@ class InventarioController extends Controller
         'id' => $inventario->id,
         'cantidad' => $inventario->cantidad,
         'usuario' => $inventario->usuario->name ?? null,
-        'ingrediente' => $inventario->ingrediente->titulo
-                            ?? $inventario->ingrediente->nombre
+        'ingrediente' => $item->ingrediente->titulo
+                            ?? $item->ingrediente->nombre
                             ?? null,
     ]);
 }
@@ -111,6 +111,8 @@ class InventarioController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'usuario_id' => 'required|exists:usuarios,id',
+            'ingrediente_id' => 'required|exists:ingredientes,id',
             'cantidad' => 'required|numeric|min:0',
         ]);
 

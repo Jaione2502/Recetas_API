@@ -20,12 +20,12 @@ class MenuController extends Controller
         $menu = Menu::with(['usuario'])->get();
 
         return response()->json(
-            $menu->map(function ($menu) {
+            $menu->map(function ($item) {
         return [
-            'id'          => $menu->id,
-            'fecha'     => $menu->fecha,
-            'usuario'     => $menu->usuario->name ?? $item->usuario->nombre ?? null,
-            'nombre' => $menu->nombre
+            'id'          => $item->id,
+            'fecha'     => $item->fecha,
+            'usuario'     => $item->usuario->name ?? $item->usuario->nombre ?? null,
+            'nombre' => $item->nombre
         ];
     })
 );
