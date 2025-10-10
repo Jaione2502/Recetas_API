@@ -85,8 +85,8 @@ class InventarioController extends Controller
         'id' => $inventario->id,
         'cantidad' => $inventario->cantidad,
         'usuario' => $inventario->usuario->name ?? null,
-        'ingrediente' => $inventario->ingrediente->titulo
-                            ?? $inventario->ingrediente->nombre
+        'ingrediente' => $item->ingrediente->titulo
+                            ?? $item->ingrediente->nombre
                             ?? null,
     ]);
 }
