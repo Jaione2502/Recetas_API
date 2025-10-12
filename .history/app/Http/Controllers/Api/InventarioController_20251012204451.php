@@ -24,7 +24,7 @@ class InventarioController extends Controller
         return [
             'id'          => $inventario->id,
             'cantidad'    => $inventario->cantidad,
-            'usuario'     => $inventario->usuario->name ?? $inventario->usuario->nombre ?? null,
+            'usuario'     => $inventario->usuario->name ?? $item->usuario->nombre ?? null,
             'ingrediente' => $inventario->ingrediente->titulo
                             ?? $inventario->ingrediente->nombre
                             ?? null,
