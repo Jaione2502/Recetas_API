@@ -112,7 +112,8 @@ class InventarioController extends Controller
     {
         $request->validate([
             'cantidad' => 'required|numeric|min:0',
-            'ingrediente_id' => 'required|exists:ingredientes,id'
+            'usuario_id' => 'required|exists:usuarios,id',
+            'ingrediente_id' => 'required|exists:ingredientes,id',
         ]);
 
         $inventario = Inventario::findOrFail($id);
